@@ -1,24 +1,61 @@
 import requests
 from app.config.settings import GITHUB_TOKEN
 
-headers = {
-    "Authorization": f"Bearer {GITHUB_TOKEN}",
-    "Accept": "application/vnd.github+json"
-}
+OWNER = "neha2510k"
+REPOSITORY = "AI-Powered-Code-Review-Assistant"
+PULL_REQUEST_NUMBER = 1
 
-response = requests.get(
-    "https://api.github.com/user/repos",
-    headers=headers
-)
 
-print("Status Code:", response.status_code)
+def get_pull_request_patches():
 
-repositories = response.json()
+    headers = {
+        "Authorization": f"Bearer {GITHUB_TOKEN}",
+        "Accept": "application/vnd.github+json"
+    }
 
-print("\nYour Repositories:\n")
+    response = requests.get(
+        f"https://api.github.com/repos/{OWNER}/{REPOSITORY}/pulls/{PULL_REQUEST_NUMBER}/files",
+        headers=headers
+    )
 
-for repo in repositories:
-    print(f"Repository Name : {repo['name']}")
-    print(f"Private         : {repo['private']}")
-    print(f"Language        : {repo['language']}")
-    print("-" * 40)
+    print("Status Code:", response.status_code)
+
+    files = response.json()
+
+    all_patches = ""
+
+    for file in files:
+        print("=" * 80)
+        print("Filename :", file["filename"])
+        print("Status   :", file["status"])
+        print("Patch:\n")
+        print(file.get("patch", "No patch available"))
+
+        patch = file.get("patch", "")
+
+        all_patches += f"\nFile: {file['filename']}\n"
+        all_patches += patch + "\n"
+
+        print("=" * 80)
+
+    return all_patches
+def post_pull_request_comment(comment):
+
+    headers = {
+        "Authorization": f"Bearer {GITHUB_TOKEN}",
+        "Accept": "application/vnd.github+json"
+    }
+
+    url = f"https://api.github.com/repos/{OWNER}/{REPOSITORY}/issues/{PULL_REQUEST_NUMBER}/comments"
+
+    data = {
+        "body": comment
+    }
+
+    response = requests.post(
+        url,
+        headers=headers,
+        json=data
+    )
+
+    print("Comment Status Code:", response.status_code)
