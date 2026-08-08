@@ -1,22 +1,86 @@
 # AI-Powered Code Review Assistant
 
-An AI-powered application that reviews GitHub Pull Requests using FastAPI, the GitHub API, and the Gemini API.
+An AI-powered application that automatically reviews GitHub Pull Requests using Google Gemini AI and posts review comments on GitHub.
 
 ## Features
 
-- AI-powered code review
-- GitHub API integration
-- Gemini API integration
-- FastAPI backend
+- Automatic GitHub Pull Request review
+- GitHub Webhook integration
+- AI-generated code review using Google Gemini
+- Reviews code for:
+  - Bugs
+  - Improvements
+  - Best Practices
+- Automatically posts review comments to GitHub Pull Requests
 
 ## Tech Stack
 
 - Python
 - FastAPI
+- Google Gemini API
 - GitHub REST API
-- Gemini API
+- GitHub Webhooks
 - Requests
 - python-dotenv
-Webhook test
-Testing automatic AI review.
-Webhook test 3
+
+## Project Workflow
+
+Developer pushes code
+→ GitHub Pull Request
+→ GitHub Webhook
+→ FastAPI
+→ GitHub API fetches changed files
+→ Gemini reviews code
+→ AI posts review comment on GitHub
+
+## Installation
+
+```bash
+git clone <repository-url>
+cd AI-Powered-Code-Review-Assistant
+```
+
+Create a virtual environment:
+
+```bash
+python -m venv .venv
+```
+
+Activate it:
+
+Windows
+
+```bash
+.venv\Scripts\activate
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Create a `.env` file:
+
+```env
+GITHUB_TOKEN=your_token
+GEMINI_API_KEY=your_api_key
+```
+
+Run the application:
+
+```bash
+uvicorn app.main:app --reload
+```
+
+## Future Enhancements
+
+- Inline GitHub review comments
+- Multi-repository support
+- Better prompt engineering
+- Deployment to cloud
+- Authentication improvements
+
+## Developer
+
+K Neha
