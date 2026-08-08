@@ -20,7 +20,7 @@ async def github_webhook(request: Request):
         owner = "neha2510k"
         repo = "AI-Powered-Code-Review-Assistant"
 
-        review_pull_request(owner, repo, pull_request_number)
+        review_pull_request(pull_request_number)
 
         return {
             "message": f"AI review completed for PR #{pull_request_number}"
