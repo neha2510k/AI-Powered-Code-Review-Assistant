@@ -1,7 +1,9 @@
 from fastapi import FastAPI
+from app.api.github_webhook import router
 from pydantic import BaseModel
 
 app = FastAPI()
+app.include_router(router)
 class GreetingRequest(BaseModel):
     name: str
 
