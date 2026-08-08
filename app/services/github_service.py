@@ -3,10 +3,8 @@ from app.config.settings import GITHUB_TOKEN
 
 OWNER = "neha2510k"
 REPOSITORY = "AI-Powered-Code-Review-Assistant"
-PULL_REQUEST_NUMBER = 1
 
-
-def get_pull_request_patches():
+def get_pull_request_patches(pull_request_number):
 
     headers = {
         "Authorization": f"Bearer {GITHUB_TOKEN}",
@@ -14,8 +12,8 @@ def get_pull_request_patches():
     }
 
     response = requests.get(
-        f"https://api.github.com/repos/{OWNER}/{REPOSITORY}/pulls/{PULL_REQUEST_NUMBER}/files",
-        headers=headers
+    f"https://api.github.com/repos/{OWNER}/{REPOSITORY}/pulls/{pull_request_number}/files",
+    headers=headers
     )
 
     print("Status Code:", response.status_code)
@@ -39,14 +37,14 @@ def get_pull_request_patches():
         print("=" * 80)
 
     return all_patches
-def post_pull_request_comment(comment):
+def post_pull_request_comment(pull_request_number, comment):
 
     headers = {
         "Authorization": f"Bearer {GITHUB_TOKEN}",
         "Accept": "application/vnd.github+json"
     }
 
-    url = f"https://api.github.com/repos/{OWNER}/{REPOSITORY}/issues/{PULL_REQUEST_NUMBER}/comments"
+    url = f"https://api.github.com/repos/{OWNER}/{REPOSITORY}/issues/{pull_request_number}/comments"
 
     data = {
         "body": comment
